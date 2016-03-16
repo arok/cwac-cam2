@@ -27,19 +27,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import de.greenrobot.event.EventBus;
+
 import java.io.File;
 import java.util.LinkedList;
-import de.greenrobot.event.EventBus;
 
 /**
  * Fragment for displaying a camera preview, with hooks to allow
@@ -56,8 +54,8 @@ public class CameraFragment extends Fragment {
   private static final int PINCH_ZOOM_DELTA=20;
   private CameraController ctlr;
   private ViewGroup previewStack;
-  private FloatingActionButton fabPicture;
-  private FloatingActionButton fabSwitch;
+  private ImageButton fabPicture;
+  private ImageButton fabSwitch;
   private View progress;
   private boolean isVideoRecording=false;
   private boolean mirrorPreview=false;
@@ -326,12 +324,9 @@ public class CameraFragment extends Fragment {
       }
 
       isVideoRecording=false;
-      fabPicture.setImageResource(
-        R.drawable.cwac_cam2_ic_videocam);
-      fabPicture.setColorNormalResId(
-        R.color.cwac_cam2_picture_fab);
-      fabPicture.setColorPressedResId(
-        R.color.cwac_cam2_picture_fab_pressed);
+      fabPicture.setImageResource(R.drawable.cwac_cam2_ic_videocam);
+//      fabPicture.setColorNormalResId(R.color.cwac_cam2_picture_fab);
+//      fabPicture.setColorPressedResId(R.color.cwac_cam2_picture_fab_pressed);
     }
     else {
       getActivity().finish();
@@ -390,8 +385,8 @@ public class CameraFragment extends Fragment {
         ctlr.recordVideo(b.build());
         isVideoRecording=true;
         fabPicture.setImageResource(R.drawable.cwac_cam2_ic_stop);
-        fabPicture.setColorNormalResId(R.color.cwac_cam2_recording_fab);
-        fabPicture.setColorPressedResId(R.color.cwac_cam2_recording_fab_pressed);
+//        fabPicture.setColorNormalResId(R.color.cwac_cam2_recording_fab);
+//        fabPicture.setColorPressedResId(R.color.cwac_cam2_recording_fab_pressed);
       }
       catch (Exception e) {
         Log.e(getClass().getSimpleName(), "Exception recording video", e);
