@@ -19,6 +19,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.media.MediaScannerConnection;
@@ -32,7 +33,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import de.greenrobot.event.EventBus;
 
@@ -198,11 +198,11 @@ public class CameraFragment extends Fragment {
     previewStack=(ViewGroup)v.findViewById(R.id.cwac_cam2_preview_stack);
 
     progress=v.findViewById(R.id.cwac_cam2_progress);
-    fabPicture=(FloatingActionButton)v.findViewById(R.id.cwac_cam2_picture);
+    fabPicture=(ImageButton) v.findViewById(R.id.cwac_cam2_picture);
 
-    if (isVideo()) {
+/*    if (isVideo()) {
       fabPicture.setImageResource(R.drawable.cwac_cam2_ic_videocam);
-    }
+    }*/
 
     fabPicture.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -211,7 +211,7 @@ public class CameraFragment extends Fragment {
       }
     });
 
-    fabSwitch=(FloatingActionButton)v.findViewById(R.id.cwac_cam2_switch_camera);
+    fabSwitch=(ImageButton) v.findViewById(R.id.cwac_cam2_switch_camera);
     fabSwitch.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -221,7 +221,7 @@ public class CameraFragment extends Fragment {
       }
     });
 
-    changeMenuIconAnimation((FloatingActionMenu)v.findViewById(R.id.cwac_cam2_settings));
+//    changeMenuIconAnimation((FloatingActionMenu)v.findViewById(R.id.cwac_cam2_settings));
 
     onHiddenChanged(false); // hack, since this does not get
                             // called on initial display
@@ -232,6 +232,14 @@ public class CameraFragment extends Fragment {
     if (ctlr!=null && ctlr.getNumberOfCameras()>0) {
       prepController();
     }
+
+    v.findViewById(R.id.button_close).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        getActivity().setResult(Activity.RESULT_CANCELED);
+        getActivity().finish();
+      }
+    });
 
     return(v);
   }
@@ -384,7 +392,7 @@ public class CameraFragment extends Fragment {
 
         ctlr.recordVideo(b.build());
         isVideoRecording=true;
-        fabPicture.setImageResource(R.drawable.cwac_cam2_ic_stop);
+        fabPicture.setImageResource(R.drawable.button_photo_camera_stop);
 //        fabPicture.setColorNormalResId(R.color.cwac_cam2_recording_fab);
 //        fabPicture.setColorPressedResId(R.color.cwac_cam2_recording_fab_pressed);
       }
